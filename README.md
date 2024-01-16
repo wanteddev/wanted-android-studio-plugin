@@ -21,9 +21,6 @@
 Add support for creating templates for Compose and packages for clean architecture.
 Suitable for Wanted projects.
 
-## How to use it
-Settings → Plugins → Marketplace -> search "Wanted Android Template" -> Install
-
 ### Adding Packages
 - new → Other → Wanted Clean Architecture Package
 
@@ -32,9 +29,6 @@ Settings → Plugins → Marketplace -> search "Wanted Android Template" -> Inst
 
 원티드 Android Studio 플러그인 입니다. 
 Compose 용 템플릿을 생성할 수 있으며, clean architecture를 위한 패키지를 생성할 수 있습니다.
-
-## 사용방법
-Settings → Plugins → Marketplace -> "Wanted Android Template" 검색 -> Install
 
 ### 패캐지 추가
 - new → Other → Wanted Clean Architecture Package

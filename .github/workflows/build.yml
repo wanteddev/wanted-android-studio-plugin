@@ -56,10 +56,10 @@ jobs:
       - name: Copy private.properties
         shell: bash
         run: |
-          echo "CERTIFICATE_CHAIN=\"${{ secrets.CERTIFICATE_CHAIN}}\"" > ./private.properties
-          echo "PRIVATE_KEY=\"${{ secrets.PRIVATE_KEY }}\"" >> ./private.properties
-          echo "PRIVATE_KEY_PASSWORD=\"${{ secrets.PRIVATE_KEY_PASSWORD }}\"" >> ./private.properties
-          echo "PUBLISH_TOKEN=\"${{ secrets.PUBLISH_TOKEN }}\"" >> ./private.properties
+          echo "CERTIFICATE_CHAIN=${{ secrets.CERTIFICATE_CHAIN}}" > ./private.properties
+          echo "PRIVATE_KEY=${{ secrets.PRIVATE_KEY }}" >> ./private.properties
+          echo "PRIVATE_KEY_PASSWORD=${{ secrets.PRIVATE_KEY_PASSWORD }}" >> ./private.properties
+          echo "PUBLISH_TOKEN=${{ secrets.PUBLISH_TOKEN }}" >> ./private.properties
 
       # Set environment variables
       - name: Export Properties
