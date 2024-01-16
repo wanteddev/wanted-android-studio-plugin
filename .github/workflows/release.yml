@@ -38,7 +38,6 @@ jobs:
           gradle-home-cache-cleanup: true
 
       - name: Copy private.properties
-        id: properties
         env:
           CERTIFICATE_CHAIN: $
           PRIVATE_KEY: $
