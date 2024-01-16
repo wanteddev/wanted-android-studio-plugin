@@ -51,14 +51,6 @@ jobs:
           echo "$CHANGELOG" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
 
-      # Update Unreleased section with the current release note
-      - name: Patch Changelog
-        if: ${{ steps.properties.outputs.changelog != '' }}
-        env:
-          CHANGELOG: ${{ steps.properties.outputs.changelog }}
-        run: |
-          ./gradlew patchChangelog --release-note="$CHANGELOG"
-
       - name: Copy private.properties
         env:
           CERTIFICATE_CHAIN: $
@@ -71,6 +63,14 @@ jobs:
           echo PRIVATE_KEY=\"PRIVATE_KEY\" >> ./private.properties
           echo PRIVATE_KEY_PASSWORD=\"PRIVATE_KEY_PASSWORD\" >> ./private.properties
           echo PUBLISH_TOKEN=\"PUBLISH_TOKEN\" >> ./private.properties
+
+      # Update Unreleased section with the current release note
+      - name: Patch Changelog
+        if: ${{ steps.properties.outputs.changelog != '' }}
+        env:
+          CHANGELOG: ${{ steps.properties.outputs.changelog }}
+        run: |
+          ./gradlew patchChangelog --release-note="$CHANGELOG"
 
       # Publish the plugin to JetBrains Marketplace
       - name: Publish Plugin
