@@ -1,6 +1,6 @@
 # wanted_android_plugin
 
-![Build](https://github.com/nayunjae/wanted_android_plugin/workflows/Build/badge.svg)
+[![Build](https://github.com/wanteddev/wanted-android-studio-plugin/actions/workflows/build.yml/badge.svg)](https://github.com/wanteddev/wanted-android-studio-plugin/actions/workflows/build.yml)
 [![Version](https://img.shields.io/jetbrains/plugin/v/23522.svg)](https://plugins.jetbrains.com/plugin/23522)
 [![Downloads](https://img.shields.io/jetbrains/plugin/d/23522.svg)](https://plugins.jetbrains.com/plugin/23522)
 

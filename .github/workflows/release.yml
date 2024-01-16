@@ -37,19 +37,6 @@ jobs:
         with:
           gradle-home-cache-cleanup: true
 
-      - name: Copy private.properties
-        env:
-          CERTIFICATE_CHAIN: $
-          PRIVATE_KEY: $
-          PRIVATE_KEY_PASSWORD: $
-          PUBLISH_TOKEN: $
-        shell: bash
-        run: |
-          echo CERTIFICATE_CHAIN=\"CERTIFICATE_CHAIN\" > ./private.properties
-          echo PRIVATE_KEY=\"PRIVATE_KEY\" >> ./private.properties
-          echo PRIVATE_KEY_PASSWORD=\"PRIVATE_KEY_PASSWORD\" >> ./private.properties
-          echo PUBLISH_TOKEN=\"PUBLISH_TOKEN\" >> ./private.properties
-
       # Set environment variables
       - name: Export Properties
         id: properties
@@ -72,13 +59,21 @@ jobs:
         run: |
           ./gradlew patchChangelog --release-note="$CHANGELOG"
 
+      - name: Copy private.properties
+        env:
+          CERTIFICATE_CHAIN: $
+          PRIVATE_KEY: $
+          PRIVATE_KEY_PASSWORD: $
+          PUBLISH_TOKEN: $
+        shell: bash
+        run: |
+          echo CERTIFICATE_CHAIN=\"CERTIFICATE_CHAIN\" > ./private.properties
+          echo PRIVATE_KEY=\"PRIVATE_KEY\" >> ./private.properties
+          echo PRIVATE_KEY_PASSWORD=\"PRIVATE_KEY_PASSWORD\" >> ./private.properties
+          echo PUBLISH_TOKEN=\"PUBLISH_TOKEN\" >> ./private.properties
+
       # Publish the plugin to JetBrains Marketplace
       - name: Publish Plugin
-        env:
-          PUBLISH_TOKEN: ${{ secrets.PUBLISH_TOKEN }}
-          CERTIFICATE_CHAIN: ${{ secrets.CERTIFICATE_CHAIN }}
-          PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
-          PRIVATE_KEY_PASSWORD: ${{ secrets.PRIVATE_KEY_PASSWORD }}
         run: ./gradlew publishPlugin
 
       # Upload artifact as a release asset
