@@ -1,8 +1,8 @@
 # wanted_android_plugin
 
 ![Build](https://github.com/nayunjae/wanted_android_plugin/workflows/Build/badge.svg)
-[![Version](https://img.shields.io/jetbrains/plugin/v/PLUGIN_ID.svg)](https://plugins.jetbrains.com/plugin/com.github.nayunjae.wantedandroidstudioplugin)
-[![Downloads](https://img.shields.io/jetbrains/plugin/d/PLUGIN_ID.svg)](https://plugins.jetbrains.com/plugin/com.github.nayunjae.wantedandroidstudioplugin)
+[![Version](https://img.shields.io/jetbrains/plugin/v/23522.svg)](https://plugins.jetbrains.com/plugin/23522)
+[![Downloads](https://img.shields.io/jetbrains/plugin/d/23522.svg)](https://plugins.jetbrains.com/plugin/23522)
 
 ## Template ToDo list
 - [x] Create a new [IntelliJ Platform Plugin Template][template] project.
@@ -22,7 +22,7 @@ Add support for creating templates for Compose and packages for clean architectu
 Suitable for Wanted projects.
 
 ## How to use it
-Select Settings → Plugins → Install Plugins from Disk to add.
+Settings → Plugins → Marketplace -> search "Wanted Android Template" -> Install
 
 ### Adding Packages
 - new → Other → Wanted Clean Architecture Package
@@ -34,7 +34,7 @@ Select Settings → Plugins → Install Plugins from Disk to add.
 Compose 용 템플릿을 생성할 수 있으며, clean architecture를 위한 패키지를 생성할 수 있습니다.
 
 ## 사용방법
-Settings → Plugins → Install Plugin from Disk 를 선택해서 추가합니다.
+Settings → Plugins → Marketplace -> "Wanted Android Template" 검색 -> Install
 
 ### 패캐지 추가
 - new → Other → Wanted Clean Architecture Package
