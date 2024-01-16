@@ -1,18 +1,23 @@
 <!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
 <idea-plugin>
     <id>com.github.nayunjae.wantedandroidstudioplugin</id>
-    <name>wanted-android-studio-plugin Template</name>
-    <vendor>nayunjae</vendor>
+    <name>Wanted Android Template</name>
+    <vendor>yunjaena</vendor>
 
     <depends>com.intellij.modules.platform</depends>
+    <depends>org.jetbrains.android</depends>
+    <depends>org.jetbrains.kotlin</depends>
+    <depends>com.intellij.modules.java</depends>
 
     <resource-bundle>messages.MyBundle</resource-bundle>
 
     <extensions defaultExtensionNs="com.intellij">
-        <toolWindow factoryClass="com.github.nayunjae.wantedandroidstudioplugin.toolWindow.MyToolWindowFactory" id="MyToolWindow"/>
+        <projectService serviceImplementation="com.github.nayunjae.wantedandroidstudioplugin.services.CleanArchitectureSettings"
+            serviceInterface="com.intellij.openapi.components.PersistentStateComponent" />
     </extensions>
 
-    <applicationListeners>
-        <listener class="com.github.nayunjae.wantedandroidstudioplugin.listeners.MyApplicationActivationListener" topic="com.intellij.openapi.application.ApplicationActivationListener"/>
-    </applicationListeners>
+    <extensions defaultExtensionNs="com.android.tools.idea.wizard.template">
+        <wizardTemplateProvider
+            implementation="com.github.nayunjae.wantedandroidstudioplugin.template.WizardTemplateProviderImpl" />
+    </extensions>
 </idea-plugin>

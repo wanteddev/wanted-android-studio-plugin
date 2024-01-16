@@ -3,5 +3,8 @@
 # wanted-android-studio-plugin Changelog
 
 ## [Unreleased]
+
+## [0.0.1]
 ### Added
-- Initial scaffold created from [IntelliJ Platform Plugin Template](https://github.com/JetBrains/intellij-platform-plugin-template)
+- Wanted clean architecture package 생성 기능 추가
+- Wanted compose base template 생성 기능 추가

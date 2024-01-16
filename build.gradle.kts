@@ -1,8 +1,13 @@
 import org.jetbrains.changelog.Changelog
 import org.jetbrains.changelog.markdownToHTML
+import java.io.FileInputStream
+import java.util.Properties
 
 fun properties(key: String) = providers.gradleProperty(key)
 fun environment(key: String) = providers.environmentVariable(key)
+val props = Properties().apply {
+    load(FileInputStream(rootProject.file("private.properties")))
+}
 
 plugins {
     id("java") // Java support
@@ -12,9 +17,6 @@ plugins {
     alias(libs.plugins.qodana) // Gradle Qodana Plugin
     alias(libs.plugins.kover) // Gradle Kover Plugin
 }
-
-group = properties("pluginGroup").get()
-version = properties("pluginVersion").get()
 
 // Configure project's dependencies
 repositories {
@@ -37,10 +39,13 @@ kotlin {
 
 // Configure Gradle IntelliJ Plugin - read more: https://plugins.jetbrains.com/docs/intellij/tools-gradle-intellij-plugin.html
 intellij {
-    pluginName = properties("pluginName")
-    version = properties("platformVersion")
-    type = properties("platformType")
+    pluginName.set(properties("pluginName"))
+    version.set(properties("platformVersion"))
+    type.set(properties("platformType"))
+    downloadSources.set(properties("platformDownloadSources").map { it.toBoolean() })
+    updateSinceUntilBuild.set(false)
 
+    //intellij.localPath.set(properties("StudioRunPath")) //localPath 를 추가 해줘야 intellij가 아닌 Android Studio 가 열림
     // Plugin Dependencies. Uses `platformPlugins` property from the gradle.properties file.
     plugins = properties("platformPlugins").map { it.split(',').map(String::trim).filter(String::isNotEmpty) }
 }
@@ -49,14 +54,7 @@ intellij {
 changelog {
     groups.empty()
     repositoryUrl = properties("pluginRepositoryUrl")
-}
-
-// Configure Gradle Qodana Plugin - read more: https://github.com/JetBrains/gradle-qodana-plugin
-qodana {
-    cachePath = provider { file(".qodana").canonicalPath }
-    reportPath = provider { file("build/reports/inspections").canonicalPath }
-    saveReport = true
-    showReport = environment("QODANA_SHOW_REPORT").map { it.toBoolean() }.getOrElse(false)
+    version.set(properties("pluginVersion"))
 }
 
 // Configure Gradle Kover Plugin - read more: https://github.com/Kotlin/kotlinx-kover#configuration
@@ -69,6 +67,16 @@ koverReport {
 }
 
 tasks {
+    runIde {
+        // Absolute path to installed target 3.5 Android Studio to use as
+        // IDE Development Instance (the "Contents" directory is macOS specific):
+        ideDir.set(file("/Applications/Android Studio.app/Contents"))
+    }
+
+    instrumentCode {
+        compilerVersion.set("231.9392.1.2311.11076708") //현재 사용중인 Android Studio Version
+    }
+
     wrapper {
         gradleVersion = properties("gradleVersion").get()
     }
@@ -76,7 +84,6 @@ tasks {
     patchPluginXml {
         version = properties("pluginVersion")
         sinceBuild = properties("pluginSinceBuild")
-        untilBuild = properties("pluginUntilBuild")
 
         // Extract the <!-- Plugin description --> section from README.md and provide for the plugin's manifest
         pluginDescription = providers.fileContents(layout.projectDirectory.file("README.md")).asText.map {
@@ -115,14 +122,14 @@ tasks {
     }
 
     signPlugin {
-        certificateChain = environment("CERTIFICATE_CHAIN")
-        privateKey = environment("PRIVATE_KEY")
-        password = environment("PRIVATE_KEY_PASSWORD")
+        certificateChain = environment("CERTIFICATE_CHAIN").getOrElse(props.getProperty("CERTIFICATE_CHAIN").trimIndent())
+        privateKey = environment("PRIVATE_KEY").getOrElse(props.getProperty("PRIVATE_KEY").trimIndent())
+        password = environment("PRIVATE_KEY_PASSWORD").getOrElse((props.getProperty("PRIVATE_KEY_PASSWORD").trimIndent()))
     }
 
     publishPlugin {
         dependsOn("patchChangelog")
-        token = environment("PUBLISH_TOKEN")
+        token = environment("PUBLISH_TOKEN").getOrElse(props.getProperty("PUBLISH_TOKEN"))
         // The pluginVersion is based on the SemVer (https://semver.org) and supports pre-release labels, like 2.1.7-alpha.3
         // Specify pre-release label to publish the plugin in a custom Release Channel automatically. Read more:
         // https://plugins.jetbrains.com/docs/intellij/deployment.html#specifying-a-release-channel
