@@ -130,19 +130,14 @@ tasks {
     }
 
     signPlugin {
-        certificateChain = environment("CERTIFICATE_CHAIN").getOrElse(
-            props.getProperty("CERTIFICATE_CHAIN").trimIndent()
-        )
-        privateKey =
-            environment("PRIVATE_KEY").getOrElse(props.getProperty("PRIVATE_KEY").trimIndent())
-        password = environment("PRIVATE_KEY_PASSWORD").getOrElse(
-            (props.getProperty("PRIVATE_KEY_PASSWORD").trimIndent())
-        )
+        certificateChain = System.getenv("CERTIFICATE_CHAIN") ?: props.getProperty("CERTIFICATE_CHAIN").trimIndent()
+        privateKey = System.getenv("PRIVATE_KEY") ?: props.getProperty("PRIVATE_KEY").trimIndent()
+        password = System.getenv("PRIVATE_KEY_PASSWORD") ?: props.getProperty("PRIVATE_KEY_PASSWORD").trimIndent()
     }
 
     publishPlugin {
         dependsOn("patchChangelog")
-        token = environment("PUBLISH_TOKEN").getOrElse(props.getProperty("PUBLISH_TOKEN"))
+        token = System.getenv("PUBLISH_TOKEN") ?: props.getProperty("PUBLISH_TOKEN")
         // The pluginVersion is based on the SemVer (https://semver.org) and supports pre-release labels, like 2.1.7-alpha.3
         // Specify pre-release label to publish the plugin in a custom Release Channel automatically. Read more:
         // https://plugins.jetbrains.com/docs/intellij/deployment.html#specifying-a-release-channel
