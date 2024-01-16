@@ -129,6 +129,19 @@ jobs:
           distribution: zulu
           java-version: 17
 
+      - name: Copy private.properties
+        env:
+          CERTIFICATE_CHAIN: $
+          PRIVATE_KEY: $
+          PRIVATE_KEY_PASSWORD: $
+          PUBLISH_TOKEN: $
+        shell: bash
+        run: |
+          echo CERTIFICATE_CHAIN=\"CERTIFICATE_CHAIN\" > ./private.properties
+          echo PRIVATE_KEY=\"PRIVATE_KEY\" >> ./private.properties
+          echo PRIVATE_KEY_PASSWORD=\"PRIVATE_KEY_PASSWORD\" >> ./private.properties
+          echo PUBLISH_TOKEN=\"PUBLISH_TOKEN\" >> ./private.properties
+
       # Setup Gradle
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
@@ -199,6 +212,19 @@ jobs:
       # Check out current repository
       - name: Fetch Sources
         uses: actions/checkout@v4
+
+      - name: Copy private.properties
+        env:
+          CERTIFICATE_CHAIN: $
+          PRIVATE_KEY: $
+          PRIVATE_KEY_PASSWORD: $
+          PUBLISH_TOKEN: $
+        shell: bash
+        run: |
+          echo CERTIFICATE_CHAIN=\"CERTIFICATE_CHAIN\" > ./private.properties
+          echo PRIVATE_KEY=\"PRIVATE_KEY\" >> ./private.properties
+          echo PRIVATE_KEY_PASSWORD=\"PRIVATE_KEY_PASSWORD\" >> ./private.properties
+          echo PUBLISH_TOKEN=\"PUBLISH_TOKEN\" >> ./private.properties
 
       # Set up Java environment for the next steps
       - name: Setup Java
